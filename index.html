@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f1f2ec">
+<title>Ahmed &amp; Lojin — A shared homeschool day</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #24332f;
+  --muted: #596a62;
+  --soft-muted: #6f7d75;
+  --paper: #f1f2ec;
+  --sheet: #fff;
+  --rule: #d7ddd5;
+  --green: #315f50;
+  --green-dark: #25483c;
+  --green-soft: #e5ece6;
+  --clay: #8e5a31;
+  --clay-soft: #e6ebe7;
+  --blue: #526c7f;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI", Arial, sans-serif;
+  --page-width: 1260px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+}
+button, input { font: inherit; }
+main {
+  width: min(100%, var(--page-width));
+  margin: 0 auto;
+  padding: 28px clamp(18px, 4.2vw, 58px) 44px;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 42px;
+  padding-bottom: 13px;
+
+}
+.wordmark {
+  color: var(--green-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .035em;
+}
+.wordmark span { color: var(--clay); padding: 0 5px; }
+.edition {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(275px, .85fr);
+  align-items: center;
+  gap: clamp(26px, 5vw, 70px);
+  padding: 31px 0 21px;
+}
+.hero-copy { min-width: 0; }
+.hero h1 {
+  max-width: 580px;
+  margin: 0;
+  color: var(--ink);
+  font: 400 clamp(30px, 2.6vw, 32px)/1.13 var(--serif);
+  letter-spacing: -.035em;
+}
+.hero-copy > p {
+  max-width: 580px;
+  margin: 11px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.day-note {
+  margin-top: 13px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.day-note strong { color: var(--green-dark); font-weight: 650; }
+.shared-device {
+  min-width: 0;
+  height: 220px;
+  margin: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+  perspective: 920px;
+  border-radius: 10px;
+  outline: none;
+}
+.shared-device:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 4px;
+}
+.device-scene {
+  position: relative;
+  width: 270px;
+  height: 180px;
+  transform-style: preserve-3d;
+  transition: transform .65s cubic-bezier(.2,.8,.2,1);
+  animation: scene-float 5.4s ease-in-out infinite;
+}
+@keyframes scene-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
+.shared-device:hover .device-scene,
+.shared-device:focus-visible .device-scene {
+  transform: rotateY(-10deg) rotateX(6deg) scale(1.035);
+}
+.track {
+  position: absolute;
+  inset: 25px 28px;
+  border: 1px solid rgba(49,95,80,.38); /* taste-skill-ignore: wire ellipse is the learner handoff path */
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  transition: transform .65s cubic-bezier(.2,.8,.2,1);
+}
+.track::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: calc(50% - 5px);
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  background: var(--green);
+  transform: translateZ(15px);
+}
+.track-ahmed {
+  animation: orbit-ahmed 32s linear infinite;
+}
+.track-lojin {
+  inset: 28px 31px;
+  border-color: rgba(142,90,49,.46);
+  animation: orbit-lojin 39s linear infinite reverse;
+}
+@keyframes orbit-ahmed {
+  from { transform: rotateX(64deg) rotateZ(-21deg) translateZ(-3px); }
+  to { transform: rotateX(64deg) rotateZ(339deg) translateZ(-3px); }
+}
+@keyframes orbit-lojin {
+  from { transform: rotateY(66deg) rotateZ(18deg) translateZ(5px); }
+  to { transform: rotateY(66deg) rotateZ(378deg) translateZ(5px); }
+}
+.track-lojin::after { background: var(--clay); }
+.shared-device:hover .track-ahmed,
+.shared-device:focus-visible .track-ahmed { animation-duration: 10s; }
+.shared-device:hover .track-lojin,
+.shared-device:focus-visible .track-lojin { animation-duration: 13s; }
+.device-screen {
+  position: absolute;
+  z-index: 2;
+  left: 91px;
+  top: 42px;
+  width: 88px;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--green-dark);
+  border-radius: 5px;
+  color: #fff;
+  background: var(--green);
+  transform: translateZ(31px) rotateY(-5deg);
+  transition: transform .65s cubic-bezier(.2,.8,.2,1);
+}
+.device-screen small { font-size: 11px; line-height: 1.2; opacity: .92; }
+.device-screen strong { margin-top: 2px; font: 400 20px/1.1 var(--serif); }
+.device-screen::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: -6px;
+  width: 6px;
+  height: calc(100% - 8px);
+  background: var(--green-dark);
+  clip-path: polygon(0 0, 100% 4px, 100% calc(100% - 4px), 0 100%);
+}
+.device-base {
+  position: absolute;
+  z-index: 3;
+  left: 70px;
+  top: 109px;
+  width: 130px;
+  height: 15px;
+  border: 0;
+  background: #d7cbb5;
+  clip-path: polygon(13% 0, 87% 0, 100% 100%, 0 100%);
+  transform: rotateX(58deg) translateZ(21px);
+  transition: transform .65s cubic-bezier(.2,.8,.2,1);
+}
+.device-base::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 24px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(36,51,47,.22);
+  transform: translateX(-50%);
+}
+.shared-device:hover .device-screen,
+.shared-device:focus-visible .device-screen { transform: translate3d(0,-2px,43px) rotateY(-9deg); }
+.shared-device:hover .device-base,
+.shared-device:focus-visible .device-base { transform: rotateX(62deg) translate3d(0,2px,27px); }
+.person-node {
+  position: absolute;
+  z-index: 4;
+  width: max-content;
+  padding: 5px 9px;
+  color: var(--green-dark);
+  background: var(--green-soft);
+  border: 0;
+  font-size: 12px;
+  font-weight: 650;
+  transform: translateZ(36px);
+  transition: transform .65s cubic-bezier(.2,.8,.2,1);
+}
+.node-ahmed { left: 8px; top: 49px; }
+.node-lojin {
+  right: 7px;
+  bottom: 40px;
+  color: #714b2d;
+  background: var(--clay-soft);
+  border-color: rgba(142,90,49,.36);
+}
+.shared-device:hover .node-ahmed,
+.shared-device:focus-visible .node-ahmed { transform: translate3d(-5px,-4px,51px); }
+.shared-device:hover .node-lojin,
+.shared-device:focus-visible .node-lojin { transform: translate3d(5px,4px,53px); }
+.device-caption {
+  position: absolute;
+  right: 3px;
+  bottom: 0;
+  left: 3px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+}
+.study-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  background: #e8ece6;
+  margin: 4px 0 25px;
+}
+.stat {
+  min-width: 0;
+  padding: 10px 0;
+}
+
+.stat strong {
+  display: block;
+  color: var(--ink);
+  font: 400 25px/1.15 var(--serif);
+  font-variant-numeric: tabular-nums;
+}
+.stat span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.schedule-tools {
+  margin: 0 0 16px;
+}
+.schedule-heading { min-width: 0; }
+.schedule-heading h2,
+.rail-section h2,
+.rail-section h3 {
+  margin: 0;
+  color: var(--ink);
+  font: 400 23px/1.2 var(--serif);
+  letter-spacing: -.02em;
+}
+.schedule-heading p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.schedule-layout {
+  display: grid;
+  grid-template-columns: minmax(0,1.7fr) minmax(265px,.75fr);
+  gap: clamp(30px,5vw,68px);
+  align-items: start;
+}
+.schedule-flow { position: relative; min-width: 0; }
+.schedule-flow::before {
+  content: "";
+  position: absolute;
+  left: 87px;
+  top: 18px;
+  bottom: 17px;
+  width: 1px;
+  background: var(--rule);
+}
+.event {
+  position: relative;
+  display: grid;
+  grid-template-columns: 72px 30px minmax(0,1fr);
+  min-width: 0;
+  padding: 14px 0 15px;
+
+}
+.event-time {
+  padding: 2px 12px 0 0;
+  color: var(--ink);
+  text-align: right;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+.event-time small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+.event-axis {
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
+}
+.event-axis::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  background: #849188;
+  outline: 1px solid #849188;
+}
+.event.turn-ahmed .event-axis::after { background: var(--green); outline-color: var(--green); }
+.event.turn-lojin .event-axis::after { background: var(--clay); outline-color: var(--clay); }
+.event.meal .event-axis::after { background: var(--blue); outline-color: var(--blue); }
+.event-body { min-width: 0; padding: 0 1px; }
+.event-topline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 3px 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.event-topline strong { color: var(--ink); font-weight: 650; }
+.event-range {
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.event h3 {
+  margin: 3px 0 0;
+  color: var(--ink);
+  font: 400 17px/1.3 var(--serif);
+  overflow-wrap: anywhere;
+}
+.event-body p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.assignments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 8px;
+}
+.assignment {
+  min-width: 145px;
+  padding-left: 9px;
+  border-left: 3px solid var(--green);
+}
+.assignment.lojin { border-color: var(--clay); }
+.assignment strong { display: block; color: var(--ink); font-size: 13px; line-height: 1.3; }
+.assignment span { display: block; margin-top: 1px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+.event.turn-ahmed,
+.event.turn-lojin { position: relative; padding-right: 12px; padding-left: 12px; }
+.event.turn-ahmed { background: var(--green-soft); }
+.event.turn-lojin { background: var(--clay-soft); }
+.event.turn-ahmed::before,
+.event.turn-lojin::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: var(--green);
+}
+.event.turn-lojin::before { background: var(--clay); }
+.event.turn-ahmed .event-time,
+.event.turn-lojin .event-time { padding-left: 0; }
+.event.turn-ahmed .event-axis::after,
+.event.turn-lojin .event-axis::after { border-color: var(--green-soft); }
+.event.turn-lojin .event-axis::after { border-color: var(--clay-soft); }
+.event.reset { background: #e9ece7; }
+.event.reset h3 { font-size: 16px; }
+.event.reset .event-body p { font-size: 13px; }
+.event:last-child { border-bottom: 0; }
+.cadence {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  width: min(100%,440px);
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.cadence span {
+  min-width: 0;
+  padding-top: 4px;
+  border-top: 3px solid var(--green);
+}
+.cadence span:last-child { border-color: var(--clay); }
+.cadence em { color: var(--muted); font-style: normal; white-space: nowrap; }
+.rail { min-width: 0; }
+.rail-section { padding: 0 0 8px; margin: 0 0 8px; }
+.rail-section h2 { margin-bottom: 8px; font-size: 22px; }
+.rail-section h3 { margin-bottom: 7px; font-size: 19px; }
+.rail-section > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.share-list { margin-top: 12px; }
+.share-row {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  
+}
+.share-row strong { color: var(--ink); font-size: 14px; }
+.share-row span { color: var(--muted); font-size: 13px; text-align: right; }
+.balance-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 10px; }
+.balance-strip span { height: 6px; background: var(--green); }
+.balance-strip span:last-child { background: var(--clay); }
+.rail-callout {
+  padding: 15px 16px;
+  background: #e8ece6;
+  margin-bottom: 18px;
+}
+.rail-callout h3 { margin: 0 0 7px; font: 400 19px/1.25 var(--serif); }
+.rail-callout p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+.rail-callout strong { color: var(--ink); font-weight: 650; }
+.next-day {
+  padding: 15px 16px;
+  color: #fff;
+  background: var(--green-dark);
+}
+.next-day h3 { margin: 0 0 6px; color: #fff; font: 400 19px/1.25 var(--serif); }
+.next-day p { margin: 0; color: #edf1ec; font-size: 14px; line-height: 1.55; }
+.next-day strong { color: #fff; font-weight: 650; }
+.footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 24px;
+  padding-top: 13px;
+  
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.footer strong { color: var(--ink); font-weight: 650; }
+@media (max-width: 900px) {
+  main { padding-right: 28px; padding-left: 28px; }
+  .hero { grid-template-columns: minmax(0,1.1fr) minmax(245px,.9fr); gap: 24px; }
+  .schedule-layout { grid-template-columns: 1fr; gap: 30px; }
+  .rail { display: grid; grid-template-columns: 1fr; gap: 17px; align-items: start; }
+  .rail-section, .rail-callout, .next-day { min-width: 0; margin: 0; }
+  .rail-section { padding-bottom: 15px; }
+}
+@media (max-width: 640px) {
+  main { padding: 17px 17px 30px; }
+  .topbar { align-items: flex-start; min-height: 37px; }
+  .edition { max-width: 135px; text-align: right; line-height: 1.35; }
+  .hero { grid-template-columns: 1fr; gap: 3px; padding: 16px 0 10px; }
+  .hero h1 { max-width: 100%; font-size: 24px; }
+  .hero-copy > p { margin-top: 8px; font-size: 14px; }
+  .day-note { margin-top: 9px; }
+  .shared-device { width: min(100%,360px); height: 130px; margin: 0 auto; }
+  .device-scene { transform: scale(.68); }
+  .shared-device:hover .device-scene,
+  .shared-device:focus-visible .device-scene { transform: scale(.70) rotateY(-8deg) rotateX(5deg); }
+  .study-stats { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 5px 18px; margin-bottom: 8px; }
+  .stat { padding: 3px 0; }
+
+
+  .stat strong { font-size: 20px; }
+  .schedule-layout { gap: 24px; }
+  .schedule-flow::before { left: 75px; }
+  .event { grid-template-columns: 61px 29px minmax(0,1fr); margin-bottom: 8px; padding: 12px 0 13px; }
+  .event.turn-ahmed, .event.turn-lojin { padding-right: 9px; padding-left: 9px; }
+  .event-time { padding-right: 9px; font-size: 12px; }
+  .event-time small { font-size: 12px; }
+  .event-topline { gap: 3px 8px; font-size: 12px; }
+  .event-range { font-size: 12px; }
+  .event h3 { font-size: 16px; }
+  .event-body p { font-size: 13px; }
+  .assignments { gap: 8px 14px; }
+  .assignment { min-width: 125px; }
+  .assignment span { font-size: 12px; }
+  .cadence { gap: 6px; font-size: 11px; }
+  .rail { grid-template-columns: 1fr; gap: 17px; }
+}
+@media (max-width: 360px) {
+  main { padding-right: 16px; padding-left: 16px; }
+  .edition { max-width: 112px; }
+  .hero h1 { font-size: 23px; }
+  .event { grid-template-columns: 55px 25px minmax(0,1fr); }
+  .schedule-flow::before { left: 68px; }
+  .event.turn-ahmed, .event.turn-lojin { padding-right: 7px; padding-left: 7px; }
+  .assignment { min-width: 110px; }
+}
+@media (hover: none) {
+  .shared-device:active .device-scene { transform: rotateY(-8deg) rotateX(5deg) scale(1.025); }
+  .shared-device:active .track-ahmed { animation-duration: 10s; }
+  .shared-device:active .track-lojin { animation-duration: 13s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}
+@media print {
+  body { background: #fff; }
+  main { max-width: none; padding: 0; }
+  .schedule-layout { grid-template-columns: minmax(0,1.7fr) minmax(245px,.75fr); gap: 28px; }
+  .hero { grid-template-columns: 1.2fr .8fr; }
+  .event.turn-ahmed, .event.turn-lojin, .study-stats, .rail-callout, .next-day {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+<body>
+<main>
+  <header class="topbar">
+    <div class="wordmark">Home study <span>·</span> Ahmed &amp; Lojin</div>
+    <div class="edition">Weekday plan · 7:00 am to 10:00 pm</div>
+  </header>
+
+  <section class="hero" aria-labelledby="page-title">
+    <div class="hero-copy">
+      <h1 id="page-title">Ahmed &amp; Lojin's weekday</h1>
+      <p>Four turns, offline study, breaks, and downtime.</p>
+      <div class="day-note"><strong>Wake 7:00 am · lessons 9:00 am · wind-down 10:00 pm</strong></div>
+    </div>
+
+  <figure class="shared-device" tabindex="0" role="group" aria-label="Interactive 3D scene: Ahmed and Lojin's laptop turns orbit one shared device">
+      <div class="device-scene" aria-hidden="true">
+        <div class="track track-ahmed"></div>
+        <div class="track track-lojin"></div>
+        <div class="device-screen"><small>Shared laptop</small><strong>09:00</strong></div>
+        <div class="device-base"></div>
+        <span class="person-node node-ahmed">Ahmed</span>
+        <span class="person-node node-lojin">Lojin</span>
+      </div>
+      <figcaption class="device-caption">Hover, focus, or press to explore · one device, two turns</figcaption>
+    </figure>
+  </section>
+
+  <section class="study-stats" aria-label="Study time at a glance">
+    <div class="stat"><strong>3½ hours</strong><span>laptop access each</span></div>
+    <div class="stat"><strong>3 hours</strong><span>laptop focus each</span></div>
+    <div class="stat"><strong>Up to 3 h</strong><span>offline focus between turns</span></div>
+    <div class="stat"><strong>10:00 pm</strong><span>wind-down · 9 hours sleep</span></div>
+  </section>
+
+  <section class="schedule-tools" aria-labelledby="schedule-title">
+    <div class="schedule-heading">
+      <h2 id="schedule-title">The day, in order</h2>
+      <p>Four balanced turns; the study day wraps by 5:40 pm.</p>
+    </div>
+  </section>
+
+  <div class="schedule-layout">
+    <section class="schedule-flow" aria-label="Weekday schedule from morning to bedtime">
+      <article class="event routine">
+        <div class="event-time"><time>07:00</time><small>60 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Wake and morning care</strong><span class="event-range">7:00–8:00 am</span></div>
+          <h3>Wash, get dressed, morning prayer, and make beds</h3>
+        </div>
+      </article>
+
+      <article class="event routine">
+        <div class="event-time"><time>08:00</time><small>60 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Breakfast and lesson setup</strong><span class="event-range">8:00–9:00 am</span></div>
+          <h3>Eat, reset the kitchen, stretch, and choose the first subjects</h3>
+        </div>
+      </article>
+
+      <article class="event turn-ahmed">
+        <div class="event-time"><time>09:00</time><small>105 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Ahmed starts · first turn</strong><span class="event-range">9:00–10:45 am</span></div>
+          <h3>Online lesson, research, or a device-based assignment</h3>
+          <div class="assignments">
+            <div class="assignment"><strong>Ahmed · laptop</strong><span>45 focus · 15 away · 45 focus</span></div>
+            <div class="assignment lojin"><strong>Lojin · offline</strong><span>Books, workbook, or handwritten practice</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="event reset">
+        <div class="event-time"><time>10:45</time><small>20 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Screen-free reset and handoff</strong><span class="event-range">10:45–11:05 am</span></div>
+          <h3>Water, stretch, and switch places without rushing</h3>
+        </div>
+      </article>
+
+      <article class="event turn-lojin">
+        <div class="event-time"><time>11:05</time><small>105 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Lojin's first turn</strong><span class="event-range">11:05 am–12:50 pm</span></div>
+          <h3>Online lesson, research, or a device-based assignment</h3>
+          <div class="assignments">
+            <div class="assignment lojin"><strong>Lojin · laptop</strong><span>45 focus · 15 away · 45 focus</span></div>
+            <div class="assignment"><strong>Ahmed · offline</strong><span>Books, workbook, or handwritten practice</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="event meal">
+        <div class="event-time"><time>12:50</time><small>60 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Lunch and full reset</strong><span class="event-range">12:50–1:50 pm</span></div>
+          <h3>Eat, pray at the actual time, and take a proper break</h3>
+        </div>
+      </article>
+
+      <article class="event turn-ahmed">
+        <div class="event-time"><time>01:50</time><small>105 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Ahmed's afternoon turn</strong><span class="event-range">1:50–3:35 pm</span></div>
+          <h3>Finish a lesson, submit work, or review difficult material</h3>
+          <div class="assignments">
+            <div class="assignment"><strong>Ahmed · laptop</strong><span>45 focus · 15 away · 45 focus</span></div>
+            <div class="assignment lojin"><strong>Lojin · offline</strong><span>Books, workbook, or handwritten practice</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="event reset">
+        <div class="event-time"><time>03:35</time><small>20 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Second reset and handoff</strong><span class="event-range">3:35–3:55 pm</span></div>
+          <h3>Have a snack, move around, then trade the laptop</h3>
+        </div>
+      </article>
+
+      <article class="event turn-lojin">
+        <div class="event-time"><time>03:55</time><small>105 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Lojin's afternoon turn</strong><span class="event-range">3:55–5:40 pm</span></div>
+          <h3>Complete the last online lesson or school task</h3>
+          <div class="assignments">
+            <div class="assignment lojin"><strong>Lojin · laptop</strong><span>45 focus · 15 away · 45 focus</span></div>
+            <div class="assignment"><strong>Ahmed · offline</strong><span>Books, workbook, or handwritten practice</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="event reset">
+        <div class="event-time"><time>05:40</time><small>30 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Close the school day</strong><span class="event-range">5:40–6:10 pm</span></div>
+          <h3>Snack, step outside, and let your attention recover</h3>
+        </div>
+      </article>
+
+      <article class="event routine">
+        <div class="event-time"><time>06:10</time><small>30 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Offline wrap-up</strong><span class="event-range">6:10–6:40 pm</span></div>
+          <h3>Correct one thing, file notes, and pick tomorrow's first task</h3>
+        </div>
+      </article>
+
+      <article class="event routine">
+        <div class="event-time"><time>06:40</time><small>50 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Everyday care</strong><span class="event-range">6:40–7:30 pm</span></div>
+          <h3>Chores, movement, and showers</h3>
+        </div>
+      </article>
+
+      <article class="event meal">
+        <div class="event-time"><time>07:30</time><small>45 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Dinner and family</strong><span class="event-range">7:30–8:15 pm</span></div>
+          <h3>Eat together and leave school closed for the evening</h3>
+        </div>
+      </article>
+
+      <article class="event routine">
+        <div class="event-time"><time>08:15</time><small>75 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Open evening</strong><span class="event-range">8:15–9:30 pm</span></div>
+          <h3>Family time, hobbies, or unplanned rest</h3>
+        </div>
+      </article>
+
+      <article class="event routine">
+        <div class="event-time"><time>09:30</time><small>30 min</small></div>
+        <div class="event-axis" aria-hidden="true"></div>
+        <div class="event-body">
+          <div class="event-topline"><strong>Tomorrow and bedtime routine</strong><span class="event-range">9:30–10:00 pm</span></div>
+          <h3>Put books out, wash up, then wind down for sleep</h3>
+        </div>
+      </article>
+    </section>
+
+    <aside class="rail" aria-label="Laptop sharing notes">
+      <section class="rail-section">
+        <h2>Equal time, both ways.</h2>
+        <p>Each person gets two laptop turns: 3½ hours of access, with a 15-minute off-screen break inside each turn.</p>
+        <div class="share-list">
+          <div class="share-row"><strong>Ahmed</strong><span>3 hours focused</span></div>
+          <div class="share-row"><strong>Lojin</strong><span>3 hours focused</span></div>
+        </div>
+        <div class="balance-strip" aria-hidden="true"><span></span><span></span></div>
+      </section>
+
+      <section class="rail-callout">
+        <h3>Offline work stays light.</h3>
+        <p>During the other person's turns, aim for <strong>two 45-minute blocks</strong> with the same 15-minute reset. Stop when the planned work is finished; the whole wait does not need to become more school.</p>
+      </section>
+
+      <section class="rail-callout">
+        <h3>Room for real life.</h3>
+        <p>Breakfast, lunch, prayer windows, chores, movement, showers, dinner, family time, and a 9-hour sleep window are already included. Shift meal and prayer blocks to your household's actual times.</p>
+      </section>
+
+      <section class="next-day">
+        <h3>Tomorrow, Lojin starts.</h3>
+        <p>Reverse the first turn, then keep alternating: <strong>Lojin, Ahmed, Lojin, Ahmed.</strong></p>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="footer">
+    <span><strong>Sleep:</strong> 10:00 pm–7:00 am · 9 hours</span>
+    <span>Weekday template · adjust around the actual prayer schedule and family commitments.</span>
+  </footer>
+</main>
+</body>
+</html>
